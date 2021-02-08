@@ -13,6 +13,12 @@ class MarkerType:
     grayButton = "vkgrm"
 
 
+class Layer:
+    map = "map"
+    sat = "sat"
+    hyb = "sat,skl"
+
+
 class Marker:
     def __init__(self, pos: Point, markerType: str = MarkerType.flag):
         self.pos = pos
@@ -23,6 +29,9 @@ class Map:
     def __init__(self):
         self.position = Point(0, 0)
         self.size = Point(0, 0)
+        self.layer = "map"
+        self.focusedAddress = ""
+        self.index = ""
         self.markers = []
         self.update()
 
@@ -44,4 +53,8 @@ class Map:
 
     def addMarker(self, marker: Marker):
         self.markers.append(marker)
+        self.update()
+
+    def setLayer(self, layer):
+        self.layer = layer
         self.update()
