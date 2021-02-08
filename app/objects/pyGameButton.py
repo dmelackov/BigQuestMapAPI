@@ -17,3 +17,11 @@ class pyButton:
 
     def draw(self):
         self.screen.blit(self.string, self.intro_rect)
+        pygame.draw.rect(self.screen, (255, 255, 255), (self.x, self.y, self.width, self.height))
+
+    def checkMouse(self, mouse_pos):
+        x = mouse_pos.x
+        y = mouse_pos.y
+        if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.width:
+            return True
+        return False
