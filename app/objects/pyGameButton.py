@@ -17,7 +17,7 @@ class pyButton:
 
     def draw(self):
         self.screen.blit(self.string, self.intro_rect)
-        pygame.draw.rect(self.screen, (255, 255, 255), (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(self.screen, (255, 255, 255), (self.x, self.y, self.width, self.height), width=1)
 
     def checkMouse(self, mouse_pos):
         x = mouse_pos.x
