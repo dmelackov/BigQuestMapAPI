@@ -32,6 +32,7 @@ class Map:
         self.layer = "map"
         self.focusedAddress = ""
         self.index = ""
+        self.image = None
         self.markers = []
         self.update()
 
