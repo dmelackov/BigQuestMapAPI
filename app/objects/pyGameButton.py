@@ -8,9 +8,12 @@ class pyButton:
         self.text = text
         self.screen = screen
         self.font = pygame.font.Font(None, 30)
+        self.string = self.font.render(self.text, True, pygame.Color(255, 255, 255))
+        self.intro_rect = self.string.get_rect()
+        self.intro_rect.x = self.x
+        self.intro_rect.top = self.y
+        self.width = self.intro_rect.width
+        self.height = self.intro_rect.height
 
     def draw(self):
-        string = self.font.render(self.text, 1, pygame.Color(255, 255, 255))
-        intro_rect = string.get_rect()
-        intro_rect.x = self.x
-        intro_rect.top = self.x
+        self.screen.blit(self.string, self.intro_rect)
