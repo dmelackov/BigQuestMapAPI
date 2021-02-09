@@ -58,7 +58,7 @@ class Map:
             self.size = v
 
     def validateCoord(self, val: Vector):
-        return abs(val.y) <= 90
+        return abs(val.y) <= 85 and abs(val.x) < 180
 
     def addMarker(self, marker: Marker):
         self.markers.append(marker)
