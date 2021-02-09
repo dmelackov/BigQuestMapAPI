@@ -48,9 +48,9 @@ class Map:
         if self.validateCoord(v):
             self.position = v
 
-    def multipleSize(self, coef: int):
-        if self.validateCoord(self.size * coef):
-            self.size = self.size * coef
+    def addSize(self, v: Vector):
+        if self.validateCoord(self.size + v):
+            self.size = self.size + v
             self.update()
 
     def setSize(self, v: Vector):
@@ -58,6 +58,7 @@ class Map:
             self.size = v
 
     def validateCoord(self, val: Vector):
+        return True
         return abs(val.y) <= 90
 
     def addMarker(self, marker: Marker):
