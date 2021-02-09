@@ -2,7 +2,7 @@ import pygame
 
 
 class pySwitch:
-    def __init__(self, x, y, screen, variants, orientation=False):
+    def __init__(self, x, y, screen, variants, arr,orientation=False):
         self.x = x
         self.y = y
         self.handler = None
@@ -52,7 +52,7 @@ class pySwitch:
                 string = self.font.render(self.variants[i], True, pygame.Color(255, 255, 255))
                 self.screen.blit(string, self.coords[i])
 
-    def mouseCheck(self, mouse_pos):
+    def checkMouse(self, mouse_pos):
         x, y = mouse_pos
         for i in range(len(self.variants)):
             if self.coords[i].x - self.k <= x <= self.coords[i].x + self.coords[i].width + 2 * self.k and self.coords[
