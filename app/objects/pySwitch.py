@@ -11,7 +11,7 @@ class pySwitch:
         self.variants = variants
         self.font = pygame.font.Font(None, 30)
         self.coords = []
-        self.bools = [False] * len(variants)
+        self.bools = [True] + [False] * (len(variants) - 1)
         self.k = 3
         self.max_width = 0
         for i in range(len(self.variants)):
@@ -27,7 +27,6 @@ class pySwitch:
             self.coords.append(intro_rect)
         for i in range(len(self.variants)):
             self.coords[i].width = self.max_width
-        print(self.coords)
 
     def setEventHandler(self, handler):
         self.handler = handler
@@ -55,4 +54,6 @@ class pySwitch:
                     + self.coords[i].height + 2 * self.k:
                 self.bools = [False] * len(self.variants)
                 self.bools[i] = True
+                if self.handler:
+                    self.handler(i)
 
