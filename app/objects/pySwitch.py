@@ -27,6 +27,14 @@ class pySwitch:
             self.coords.append(intro_rect)
         for i in range(len(self.variants)):
             self.coords[i].width = self.max_width
+            if orientation:
+                self.x = self.coords[0].x
+                for i in range(len(self.variants)):
+                    self.coords[i].x = self.x
+                    self.x += self.max_width + self.k * 2
+
+
+
 
     def setEventHandler(self, handler):
         self.handler = handler

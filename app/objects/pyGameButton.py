@@ -3,7 +3,7 @@ import pygame
 
 class pyButton:
     def __init__(self, x, y, text, screen, arr, toggle=False):
-        self.handler = lambda: None
+        self.handler = None
         arr.append(self)
         self.x = x
         self.y = y
@@ -51,11 +51,13 @@ class pyButton:
             if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
                     + self.height + 2 * self.k:
                 self.pressed = not self.pressed
-                self.handler(self.pressed)
+                if self.handler:
+                    self.handler(self.pressed)
             return
         else:
             x = mouse_pos[0]
             y = mouse_pos[1]
             if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
                     + self.height + 2 * self.k:
-                self.handler()
+                if self.handler:
+                    self.handler()
