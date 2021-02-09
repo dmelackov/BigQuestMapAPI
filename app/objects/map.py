@@ -74,3 +74,6 @@ class Map:
 
     def setAddress(self, address: GeocoderMapObject):
         self.focusedAddress = address
+
+
+MapClassObject = Map()
