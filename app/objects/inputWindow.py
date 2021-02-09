@@ -2,9 +2,11 @@ import pygame
 
 
 class inputWindow:
-    def __init__(self, x, y, width, height, screen):
+    def __init__(self, x, y, width, height, screen, arr, inputs):
         self.x = x
         self.y = y
+        arr.append(self)
+        inputs.append(self)
         self.width = width
         self.height = height
         self.text = ''
@@ -32,7 +34,7 @@ class inputWindow:
     def getText(self):
         return self.text
 
-    def checkActivated(self, mouse_pos):
+    def checkMouse(self, mouse_pos):
         x, y = mouse_pos
         if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height:
             self.active = not self.active
