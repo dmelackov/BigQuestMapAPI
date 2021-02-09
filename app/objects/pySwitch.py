@@ -33,9 +33,6 @@ class pySwitch:
                     self.coords[i].x = self.x
                     self.x += self.max_width + self.k * 2
 
-
-
-
     def setEventHandler(self, handler):
         self.handler = handler
 
@@ -58,10 +55,10 @@ class pySwitch:
     def mouseCheck(self, mouse_pos):
         x, y = mouse_pos
         for i in range(len(self.variants)):
-            if self.coords[i].x - self.k <= x <= self.coords[i].x + self.coords[i].width + 2 * self.k and self.coords[i].y - self.k <= y <= self.coords[i].y \
+            if self.coords[i].x - self.k <= x <= self.coords[i].x + self.coords[i].width + 2 * self.k and self.coords[
+                i].y - self.k <= y <= self.coords[i].y \
                     + self.coords[i].height + 2 * self.k:
                 self.bools = [False] * len(self.variants)
                 self.bools[i] = True
                 if self.handler:
                     self.handler(i)
-
