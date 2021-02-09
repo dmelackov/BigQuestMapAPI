@@ -44,18 +44,18 @@ class Map:
             self.position = self.position + add
             self.update()
 
-    def setPosition(self, x: int, y: int):
-        if self.validateCoord(Vector(x, y)):
-            self.position = Vector(x, y)
+    def setPosition(self, v: Vector):
+        if self.validateCoord(v):
+            self.position = v
 
     def multipleSize(self, coef: int):
         if self.validateCoord(self.size * coef):
             self.size = self.size * coef
             self.update()
 
-    def setSize(self, x: int, y: int):
-        if self.validateCoord(Vector(x, y)):
-            self.size = Vector(x, y)
+    def setSize(self, v: Vector):
+        if self.validateCoord(v):
+            self.size = v
 
     def validateCoord(self, val: Vector):
         return abs(val.y) <= 90
