@@ -1,4 +1,5 @@
-from app.objects.vectorUtils import Point
+from app.objects.vectorUtils import Vector
+from app.objects.api import GeocoderMapObject
 
 
 class MarkerType:
@@ -20,18 +21,17 @@ class Layer:
 
 
 class Marker:
-    def __init__(self, pos: Point, markerType: str = MarkerType.flag):
+    def __init__(self, pos: Vector, markerType: str = MarkerType.flag):
         self.pos = pos
         self.markerType = markerType
 
 
 class Map:
     def __init__(self):
-        self.position = Point(0, 0)
-        self.size = Point(0, 0)
+        self.position = Vector(0, 0)
+        self.size = Vector(0, 0)
         self.layer = "map"
-        self.focusedAddress = ""
-        self.index = ""
+        self.focusedAddress = None
         self.image = None
         self.markers = []
         self.update()
@@ -39,17 +39,17 @@ class Map:
     def update(self):
         pass
 
-    def addPosition(self, add: Point):
+    def addPosition(self, add: Vector):
         if self.validateCoord(self.position + add):
             self.position = self.position + add
             self.update()
 
-    def multSize(self, coef: int):
+    def multipleSize(self, coef: int):
         if self.validateCoord(self.size * coef):
             self.size = self.size * coef
             self.update()
 
-    def validateCoord(self, val: Point):
+    def validateCoord(self, val: Vector):
         return abs(val.y) <= 90
 
     def addMarker(self, marker: Marker):
@@ -59,3 +59,10 @@ class Map:
     def setLayer(self, layer):
         self.layer = layer
         self.update()
+
+    def resetAddress(self):
+        self.focusedAddress = None
+        self.update()
+
+    def setAddress(self, address: GeocoderMapObject):
+        self.focusedAddress = address
