@@ -30,7 +30,7 @@ class pyButton:
         if self.mouseonobject:
             self.string = self.font.render(self.text, True, pygame.Color(120, 120, 120))
             self.screen.blit(self.string, self.intro_rect)
-            pygame.draw.rect(self.screen, (0, 0, 0),
+            pygame.draw.rect(self.screen, (120, 120, 120),
                              (self.x - self.k, self.y - self.k, self.width + 2 * self.k, self.height + 2 * self.k),
                              width=1)
         else:
