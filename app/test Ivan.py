@@ -14,6 +14,7 @@ c = pySwitch(200, 50, screen, ('First', 'Second', 'Third'), widgets ,False)
 a = pyButton(10, 10, 'Это тестовая кнопка', screen,widgets, buttons, True)
 b = pyButton(200, 400, 'Это тестовая кнопка 2', screen,buttons, widgets)
 pygame.display.flip()
+clock = pygame.time.Clock()
 while True:
     screen.fill((0, 0, 0))
     for event in pygame.event.get():
@@ -29,3 +30,4 @@ while True:
     [x.mouseonButton(pygame.mouse.get_pos()) for x in buttons]
     [x.draw() for x in widgets]
     pygame.display.flip()
+    clock.tick(60)
