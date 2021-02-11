@@ -3,7 +3,12 @@ from app.objects.pyGameButton import pyButton
 from app.objects.pySwitch import pySwitch
 from app.objects.inputWindow import inputWindow
 from app.objects.pyMap import pyMap
+from app.objects.map import MapClassObject
+from app.objects.vectorUtils import Vector
 
+MapClassObject.setSize(Vector(20, 20))
+MapClassObject.setPosition(Vector(55.755151, 37.612891))
+MapClassObject.update()
 pygame.init()
 screen = pygame.display.set_mode((1200, 800))
 widgets = []
