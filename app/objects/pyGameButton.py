@@ -15,7 +15,7 @@ class pyButton:
             self.pressed = False
         self.text = text
         self.screen = screen
-        self.font = pygame.font.Font(None, 30)
+        self.font = pygame.font.SysFont('calibri', 26)
         self.string = self.font.render(self.text, True, pygame.Color(255, 255, 255))
         self.intro_rect = self.string.get_rect()
         self.intro_rect.x = self.x

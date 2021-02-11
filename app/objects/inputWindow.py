@@ -16,7 +16,7 @@ class inputWindow:
         self.screen = screen
         self.fbuttons = [f'f{x}' for x in range(1, 13)]
         a = 1
-        font = pygame.font.Font(None, a)
+        font = pygame.font.SysFont('calibri', a)
         string = font.render('Test string', True, pygame.Color(255, 255, 255))
         rect = string.get_rect()
         while rect.height < self.height:

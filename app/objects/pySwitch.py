@@ -9,7 +9,7 @@ class pySwitch:
         self.orientation = orientation
         self.screen = screen
         self.variants = variants
-        self.font = pygame.font.Font(None, 30)
+        self.font = pygame.font.SysFont('calibri', 26)
         self.coords = []
         self.bools = [True] + [False] * (len(variants) - 1)
         self.k = 3

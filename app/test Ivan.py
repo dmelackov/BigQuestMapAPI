@@ -3,16 +3,15 @@ from objects.pyGameButton import pyButton
 from objects.pySwitch import pySwitch
 from objects.inputWindow import inputWindow
 
-
 pygame.init()
-screen = pygame.display.set_mode((600, 450))
+screen = pygame.display.set_mode((1200, 800))
 widgets = []
 buttons = []
 inputs = []
-d = inputWindow(10, 150, 350, 30, screen, widgets, inputs)
-c = pySwitch(200, 50, screen, ('First', 'Second', 'Third'), widgets ,False)
-a = pyButton(10, 10, 'Это тестовая кнопка', screen,widgets, buttons, True)
-b = pyButton(200, 400, 'Это тестовая кнопка 2', screen,buttons, widgets)
+font = pygame.font.SysFont('calibri', 26)
+
+
+
 pygame.display.flip()
 clock = pygame.time.Clock()
 while True:
@@ -29,5 +28,9 @@ while True:
                 el.keyboardButtonPressed(event)
     [x.mouseonButton(pygame.mouse.get_pos()) for x in buttons]
     [x.draw() for x in widgets]
+    pygame.draw.rect(screen, (255, 255, 255),
+                     (300, 100, 600, 600), width=1)
+    string = font.render('Место для карты', True, pygame.Color(255, 255, 255))
+    screen.blit(string, (500, 380, 200, 50))
     pygame.display.flip()
     clock.tick(60)
