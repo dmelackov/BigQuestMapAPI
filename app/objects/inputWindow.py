@@ -34,8 +34,8 @@ class inputWindow:
     def getText(self):
         return self.text
 
-    def checkMouse(self, mouse_pos):
-        x, y = mouse_pos
+    def checkMouse(self, event):
+        x, y = event.pos
         if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height:
             self.active = not self.active
         else:

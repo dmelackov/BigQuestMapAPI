@@ -8,6 +8,7 @@ class pySwitch:
         self.handler = None
         self.orientation = orientation
         self.screen = screen
+        arr.append(self)
         self.variants = variants
         self.font = pygame.font.SysFont('calibri', 26)
         self.coords = []
@@ -52,8 +53,8 @@ class pySwitch:
                 string = self.font.render(self.variants[i], True, pygame.Color(255, 255, 255))
                 self.screen.blit(string, self.coords[i])
 
-    def checkMouse(self, mouse_pos):
-        x, y = mouse_pos
+    def checkMouse(self, event):
+        x, y = event.pos
         for i in range(len(self.variants)):
             if self.coords[i].x - self.k <= x <= self.coords[i].x + self.coords[i].width + 2 * self.k and self.coords[
                 i].y - self.k <= y <= self.coords[i].y \

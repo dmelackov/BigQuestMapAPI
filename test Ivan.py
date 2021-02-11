@@ -11,9 +11,9 @@ buttons = []
 inputs = []
 font = pygame.font.SysFont('calibri', 26)
 
-up = pyButton(300, 176, '↑', screen, widgets, buttons, 600, 50, toggle=False)
+up = pyButton(300, 125, '↑', screen, widgets, buttons, 600, 50, toggle=False)
 down = pyButton(300, 625, '↓', screen, widgets, buttons, 600, 50, toggle=False)
-left = pyButton(900, 101, '→', screen, widgets, buttons, 50, 400, toggle=False)
+left = pyButton(900, 174, '→', screen, widgets, buttons, 50, 450, toggle=False)
 map = pyMap(300, 175, screen, widgets)
 
 pygame.display.flip()
@@ -26,7 +26,7 @@ while True:
             exit(0)
         if event.type == pygame.MOUSEBUTTONDOWN:
             for widget in widgets:
-                widget.checkMouse(event.pos)
+                widget.checkMouse(event)
         if event.type == pygame.KEYDOWN:
             for el in inputs:
                 el.keyboardButtonPressed(event)
