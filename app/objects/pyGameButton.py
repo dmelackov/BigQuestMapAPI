@@ -20,7 +20,6 @@ class pyButton:
         self.screen = screen
         self.font = pygame.font.SysFont('calibri', 26)
         self.string = self.font.render(self.text, True, pygame.Color(255, 255, 255))
-        self.k = 3
         if not width:
             self.width = self.intro_rect.width
         if not height:
@@ -46,45 +45,45 @@ class pyButton:
         self.timerCheck()
         if self.anim == 1:
             pygame.draw.rect(self.screen, (45, 45, 45),
-                             (self.x, self.y, self.width + self.k, self.height + self.k))
+                             (self.x, self.y, self.width, self.height))
             self.string = self.font.render(self.text, True, pygame.Color(0, 0, 0))
             self.screen.blit(self.string, self.intro_rect)
         elif self.toggle and self.mode and self.mouse:
             pygame.draw.rect(self.screen, (120, 120, 120),
-                             (self.x, self.y, self.width + self.k, self.height + self.k))
+                             (self.x, self.y, self.width, self.height))
             self.string = self.font.render(self.text, True, pygame.Color(0, 0, 0))
             self.screen.blit(self.string, self.intro_rect)
         elif self.mouse == 1:
             self.string = self.font.render(self.text, True, pygame.Color(120, 120, 120))
             self.screen.blit(self.string, self.intro_rect)
             pygame.draw.rect(self.screen, (120, 120, 120),
-                             (self.x, self.y, self.width + self.k, self.height + self.k),
+                             (self.x, self.y, self.width, self.height),
                              width=1)
         elif self.mode == 1:
             pygame.draw.rect(self.screen, (255, 255, 255),
-                             (self.x, self.y, self.width + self.k, self.height + self.k))
+                             (self.x, self.y, self.width, self.height))
             self.string = self.font.render(self.text, True, pygame.Color(0, 0, 0))
             self.screen.blit(self.string, self.intro_rect)
         else:
             self.string = self.font.render(self.text, True, pygame.Color(255, 255, 255))
             self.screen.blit(self.string, self.intro_rect)
             pygame.draw.rect(self.screen, (255, 255, 255),
-                             (self.x, self.y, self.width + self.k, self.height + self.k),
+                             (self.x, self.y, self.width, self.height),
                              width=1)
 
     def checkMouse(self, event):
         x, y = event.pos
         if self.toggle:
-            if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
-                    + self.height + 2 * self.k:
+            if self.x <= x <= self.x + self.width and self.y <= y <= self.y \
+                    + self.height:
                 self.mode = (self.mode + 1) % 2
                 self.timer = 0
                 if self.handler:
                     self.handler(self.pressed)
             return
         else:
-            if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
-                    + self.height + 2 * self.k:
+            if self.x <= x <= self.x + self.width and self.y<= y <= self.y \
+                    + self.height:
                 self.timer = 0
                 if self.handler:
                     self.handler()
@@ -106,8 +105,8 @@ class pyButton:
     def mouseonButton(self, mouse_pos):
         x = mouse_pos[0]
         y = mouse_pos[1]
-        if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
-                + self.height + 2 * self.k:
+        if self.x <= x <= self.x + self.width and self.y <= y <= self.y \
+                + self.height:
             self.mouse = 1
         else:
             self.mouse = 0

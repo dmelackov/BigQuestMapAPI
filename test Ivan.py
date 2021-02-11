@@ -16,15 +16,18 @@ buttons = []
 inputs = []
 font = pygame.font.SysFont('calibri', 26)
 
-up = pyButton(299, 125, '↑', screen, widgets, buttons, 602, 50, toggle=False)
-down = pyButton(299, 625, '↓', screen, widgets, buttons, 602, 50, toggle=False)
-right = pyButton(900, 174, '→', screen, widgets, buttons, 50, 452, toggle=False)
-left = pyButton(250, 174, '←', screen, widgets, buttons, 50, 452, toggle=False)
+up = pyButton(299, 128, '↑', screen, widgets, buttons, 605, 50, toggle=False)
+down = pyButton(299, 625, '↓', screen, widgets, buttons, 605, 50, toggle=False)
+right = pyButton(900, 174, '→', screen, widgets, buttons, 50, 455, toggle=False)
+left = pyButton(253, 174, '←', screen, widgets, buttons, 50, 455, toggle=False)
+plus_size = pyButton(1000, 174, '+', screen, widgets, buttons, 50, 50, toggle=False)
+minus_size = pyButton(1000, 224, '-', screen, widgets, buttons, 50,50, toggle=False)
 map = pyMap(300, 175, screen, widgets)
 up.setCheckKey(pygame.K_UP)
 down.setCheckKey(pygame.K_DOWN)
 left.setCheckKey(pygame.K_LEFT)
 right.setCheckKey(pygame.K_RIGHT)
+plus_size.setChek
 
 pygame.display.flip()
 clock = pygame.time.Clock()
