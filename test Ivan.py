@@ -3,7 +3,7 @@ from app.objects.pyGameButton import pyButton
 from app.objects.pySwitch import pySwitch
 from app.objects.inputWindow import inputWindow
 from app.objects.pyMap import pyMap
-from app.objects.map import MapClassObject
+from app.objects.map import MapClassObject, Layer
 from app.objects.vectorUtils import Vector
 
 MapClassObject.setSize(Vector(20, 20))
@@ -31,6 +31,8 @@ left.setCheckKey(pygame.K_LEFT)
 right.setCheckKey(pygame.K_RIGHT)
 plus_size.setCheckKey(pygame.K_PAGEUP)
 minus_size.setCheckKey(pygame.K_PAGEDOWN)
+
+scheme.setEventHandler(lambda x: MapClassObject.setLayer((Layer.map, Layer.sat, Layer.hyb)[x]))
 
 up.setEventHandler(lambda: MapClassObject.addPosition(Vector(0, 1)))
 down.setEventHandler(lambda: MapClassObject.addPosition(Vector(0, -1)))
