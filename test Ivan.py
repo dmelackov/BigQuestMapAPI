@@ -32,7 +32,5 @@ while True:
                 el.keyboardButtonPressed(event)
     [x.mouseonButton(pygame.mouse.get_pos()) for x in buttons]
     [x.draw() for x in widgets]
-    string = font.render('Место для карты', True, pygame.Color(255, 255, 255))
-    screen.blit(string, (500, 380, 200, 50))
     pygame.display.flip()
     clock.tick(60)
