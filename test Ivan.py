@@ -28,7 +28,8 @@ search_input = inputWindow(10, 40, 350, 25, screen, widgets, inputs, 'Введи
 search_button = pyButton(10, 80, 'Искать', screen, widgets, buttons, 100, 50, toggle=False)
 dropButton = pyButton(10, 140, 'Сброс координат', screen, widgets, buttons, 200, 50, toggle=False)
 
-search_input = inputWindow(299, 700, 600, 25, screen, widgets, inputs, 'Здесь будет адрес', False)
+address_output = inputWindow(299, 700, 600, 25, screen, widgets, inputs, 'Здесь будет адрес', False)
+index_switch = pyButton(10, 700, 'Отображение индекса', screen, widgets, buttons, 260, 30, toggle=True)
 
 up.setCheckKey(pygame.K_UP)
 down.setCheckKey(pygame.K_DOWN)
