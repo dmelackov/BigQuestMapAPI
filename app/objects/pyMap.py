@@ -1,5 +1,6 @@
 import pygame
 from app.objects.map import MapClassObject
+from app.objects.vectorUtils import Vector
 
 
 class pyMap:
@@ -14,8 +15,8 @@ class pyMap:
     def draw(self):
         self.screen.blit(MapClassObject.image, (self.x, self.y))
 
-    def checkMouse(self, mouse_pos):
-        absX, absY = mouse_pos[0], mouse_pos[1]
+    def checkMouse(self, event):
+        absX, absY = event.pos()
         relX = absX - self.x
         relY = absY - self.y
         if relX >= self.width or relX < 0:
@@ -23,3 +24,5 @@ class pyMap:
         if relY >= self.height or relY < 0:
             return
         print("MapRel:", relX, relY)
+        relCoords = Vector(relX, relY)
+        gradCoords = relCoords
