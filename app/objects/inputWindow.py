@@ -2,15 +2,14 @@ import pygame
 
 
 class inputWindow:
-    def __init__(self, x, y, width, height, screen, arr, inputs):
+    def __init__(self, x, y, width, height, screen, arr, inputs, text=''):
         self.x = x
         self.y = y
         arr.append(self)
         inputs.append(self)
         self.width = width
         self.height = height
-        self.text = ''
-        self.k = 3
+        self.text = text
         self.i = 0
         self.active = False
         self.screen = screen
@@ -24,7 +23,7 @@ class inputWindow:
             font = pygame.font.SysFont('calibri', a)
             string = font.render('Test string', True, pygame.Color(255, 255, 255))
             rect = string.get_rect()
-        a -= 1
+        a -= 2
         self.font = pygame.font.SysFont('calibri', a)
         string = font.render('D', True, pygame.Color(255, 255, 255))
         self.one_sym = string.get_rect().width
@@ -38,6 +37,8 @@ class inputWindow:
         x, y = event.pos
         if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height:
             self.active = not self.active
+            if self.text == 'Введите объект для поиска':
+                self.text = ''
         else:
             self.active = False
 
@@ -55,16 +56,16 @@ class inputWindow:
 
         if self.active:
             pygame.draw.rect(self.screen, (255, 255, 255),
-                             (self.x - self.k, self.y - self.k, self.width + self.k * 2,
-                              self.height + 2 * self.k))
+                             (self.x , self.y, self.width,
+                              self.height))
             for sym in self.text[-self.width // self.one_sym - 4:]:
                 x += self.render(sym, (x, y))
                 if x > self.width:
                     self.i += 1
         else:
             pygame.draw.rect(self.screen, (255, 255, 255),
-                             (self.x - self.k, self.y - self.k, self.width + self.k * 2,
-                              self.height + 2 * self.k), width=1)
+                             (self.x, self.y, self.width,
+                              self.height), width=1)
             for sym in self.text[-self.width // self.one_sym - 4:]:
                 x += self.render(sym, (x, y), (255, 255, 255))
 
