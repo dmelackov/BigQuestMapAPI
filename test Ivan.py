@@ -18,10 +18,13 @@ font = pygame.font.SysFont('calibri', 26)
 
 up = pyButton(299, 125, '↑', screen, widgets, buttons, 602, 50, toggle=False)
 down = pyButton(299, 625, '↓', screen, widgets, buttons, 602, 50, toggle=False)
-left = pyButton(900, 174, '→', screen, widgets, buttons, 50, 452, toggle=False)
+right = pyButton(900, 174, '→', screen, widgets, buttons, 50, 452, toggle=False)
 left = pyButton(250, 174, '←', screen, widgets, buttons, 50, 452, toggle=False)
 map = pyMap(300, 175, screen, widgets)
 up.setCheckKey(pygame.K_UP)
+down.setCheckKey(pygame.K_DOWN)
+left.setCheckKey(pygame.K_LEFT)
+right.setCheckKey(pygame.K_RIGHT)
 
 pygame.display.flip()
 clock = pygame.time.Clock()
@@ -38,7 +41,7 @@ while True:
             for el in inputs:
                 el.keyboardButtonPressed(event)
             for el in buttons:
-                el.chekKeyboard(event)
+                el.checkKeyboard(event)
     [x.mouseonButton(pygame.mouse.get_pos()) for x in buttons]
     [x.draw() for x in widgets]
     pygame.display.flip()
