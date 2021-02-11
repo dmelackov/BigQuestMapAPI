@@ -75,7 +75,6 @@ class pyButton:
     def checkMouse(self, event):
         x, y = event.pos
         if self.toggle:
-
             if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
                     + self.height + 2 * self.k:
                 self.mode = (self.mode + 1) % 2
@@ -86,6 +85,20 @@ class pyButton:
         else:
             if self.x - self.k <= x <= self.x + self.width + 2 * self.k and self.y - self.k <= y <= self.y \
                     + self.height + 2 * self.k:
+                self.timer = 0
+                if self.handler:
+                    self.handler()
+
+    def checkKeyboard(self, event):
+        if self.toggle:
+            if event.key == self.key:
+                self.mode = (self.mode + 1) % 2
+                self.timer = 0
+                if self.handler:
+                    self.handler(self.pressed)
+            return
+        else:
+            if event.key == self.key:
                 self.timer = 0
                 if self.handler:
                     self.handler()
