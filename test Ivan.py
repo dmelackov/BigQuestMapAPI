@@ -24,8 +24,11 @@ plus_size = pyButton(1000, 174, '+', screen, widgets, buttons, 50, 50, toggle=Fa
 minus_size = pyButton(1000, 224, '-', screen, widgets, buttons, 50, 50, toggle=False)
 map = pyMap(300, 175, screen, widgets)
 scheme = pySwitch(1000, 300, screen, ('Карта', 'Спутник', 'Гибрид'), widgets)
-search_input = inputWindow(10, 40, 350, 25, screen, widgets, inputs, 'Введите объект для поиска')
+search_input = inputWindow(10, 40, 350, 25, screen, widgets, inputs, 'Введите объект для поиска', True)
 search_button = pyButton(10, 80, 'Искать', screen, widgets, buttons, 100, 50, toggle=False)
+dropButton = pyButton(10, 140, 'Сброс координат', screen, widgets, buttons, 200, 50, toggle=False)
+
+search_input = inputWindow(299, 700, 600, 25, screen, widgets, inputs, 'Здесь будет адрес', False)
 
 up.setCheckKey(pygame.K_UP)
 down.setCheckKey(pygame.K_DOWN)

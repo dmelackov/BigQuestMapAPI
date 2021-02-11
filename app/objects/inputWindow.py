@@ -2,7 +2,7 @@ import pygame
 
 
 class inputWindow:
-    def __init__(self, x, y, width, height, screen, arr, inputs, text=''):
+    def __init__(self, x, y, width, height, screen, arr, inputs, text='', editable=False):
         self.x = x
         self.y = y
         arr.append(self)
@@ -10,6 +10,7 @@ class inputWindow:
         self.width = width
         self.height = height
         self.text = text
+        self.edit = editable
         self.i = 0
         self.active = False
         self.screen = screen
@@ -35,12 +36,13 @@ class inputWindow:
 
     def checkMouse(self, event):
         x, y = event.pos
-        if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height:
+        if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height and self.edit:
             self.active = not self.active
             if self.text == 'Введите объект для поиска':
                 self.text = ''
         else:
             self.active = False
+            self.text = 'Введите объект для поиска' if not self.text else self.text
 
     def keyboardButtonPressed(self, event):
         button = event.unicode
@@ -56,7 +58,7 @@ class inputWindow:
 
         if self.active:
             pygame.draw.rect(self.screen, (255, 255, 255),
-                             (self.x , self.y, self.width,
+                             (self.x, self.y, self.width,
                               self.height))
             for sym in self.text[-self.width // self.one_sym - 4:]:
                 x += self.render(sym, (x, y))
@@ -76,3 +78,6 @@ class inputWindow:
         rect.y = coords[1]
         self.screen.blit(string, rect)
         return rect.width
+
+    def setText(self, text):
+        self.text = text
