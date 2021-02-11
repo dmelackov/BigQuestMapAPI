@@ -2,7 +2,7 @@ import pygame
 
 
 class pyButton:
-    def __init__(self, x, y, text, screen, arr, buttons, width=None, height=None ,toggle=False):
+    def __init__(self, x, y, text, screen, arr, buttons, width=None, height=None, toggle=False):
         self.handler = None
         self.mouse = 0
         arr.append(self)
