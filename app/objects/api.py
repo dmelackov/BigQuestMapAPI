@@ -15,13 +15,14 @@ class API:
 
         self.format = "json"
 
-    def loadMap(self, map):
+    def loadMap(self, YandexMap):
         params = {}
-        if len(map.markers) != 0:
-            pass
-        params['ll'] = map.position.toString()
-        params['spn'] = map.size.toString()
-        params['l'] = map.layer
+        if len(YandexMap.markers) != 0:
+            params['pt'] = '~'.join(list(map(lambda x: x.toString(), YandexMap.markers)))
+        params['ll'] = YandexMap.position.toString()
+        params['spn'] = YandexMap.size.toString()
+        params['l'] = YandexMap.layer
+
         return self.requestStaticMap(params)
 
     def requestGeocoder(self, params: dict):
@@ -40,6 +41,7 @@ class API:
 
     def requestStaticMap(self, params: dict):
         localParams = params
+        localParams['size'] = "600,450"
         response = self.defaultResponse(self.staticMapUrl, localParams)
         image = Image.open(BytesIO(response.content)).convert("RGB")
         mode = image.mode
@@ -52,6 +54,7 @@ class API:
         response = requests.get(apiServer, params=params)
         if not response:
             print(response.content)
+            print(params)
             return
         return response
 

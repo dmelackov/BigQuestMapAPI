@@ -32,6 +32,14 @@ right.setCheckKey(pygame.K_RIGHT)
 plus_size.setCheckKey(pygame.K_PAGEUP)
 minus_size.setCheckKey(pygame.K_PAGEDOWN)
 
+up.setEventHandler(lambda: MapClassObject.addPosition(Vector(0, 1)))
+down.setEventHandler(lambda: MapClassObject.addPosition(Vector(0, -1)))
+left.setEventHandler(lambda: MapClassObject.addPosition(Vector(-1, 0)))
+right.setEventHandler(lambda: MapClassObject.addPosition(Vector(1, 0)))
+
+plus_size.setEventHandler(lambda: MapClassObject.addSize(Vector(-4 / 4, -3 / 4)))
+minus_size.setEventHandler(lambda: MapClassObject.addSize(Vector(4 / 4, 3 / 4)))
+
 pygame.display.flip()
 clock = pygame.time.Clock()
 while True:

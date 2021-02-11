@@ -25,11 +25,14 @@ class Marker:
         self.pos = pos
         self.markerType = markerType
 
+    def toString(self):
+        return self.pos.toString() + "," + self.markerType
+
 
 class Map:
     def __init__(self):
         self.position = Vector(0, 0)
-        self.size = Vector(1, 1)
+        self.size = Vector(4, 3)
         self.layer = "map"
         self.focusedAddress = None
         self.image = None
@@ -37,7 +40,7 @@ class Map:
         self.update()
 
     def update(self):
-        self.image = ApiClassObject.loadMap(map=self)
+        self.image = ApiClassObject.loadMap(YandexMap=self)
 
     def addPosition(self, add: Vector):
         if self.validateCoord(self.position + add):
@@ -49,7 +52,7 @@ class Map:
             self.position = v
 
     def addSize(self, v: Vector):
-        if self.validateCoord(self.size + v):
+        if (self.size + v).x > 0 and (self.size + v).y > 0:
             self.size = self.size + v
             self.update()
 

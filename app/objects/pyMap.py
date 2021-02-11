@@ -1,5 +1,5 @@
 import pygame
-from app.objects.map import MapClassObject
+from app.objects.map import MapClassObject, Marker, MarkerType
 from app.objects.vectorUtils import Vector
 
 
@@ -24,13 +24,12 @@ class pyMap:
         if relY >= self.height or relY < 0:
             return
         print("MapRel:", relX, relY)
-        relCoords = Vector(relX - self.width // 2, relY - self.height // 2)
+        relCoords = Vector(relX - self.width // 2, -(relY - self.height // 2))
         print("VectorRel:", relCoords.toString())
         gradCoords = relCoords
         gradCoords.x /= self.width
         gradCoords.y /= self.height
         gradCoords = MapClassObject.position + Vector((gradCoords.x * MapClassObject.size.x),
                                                       (gradCoords.y * MapClassObject.size.y))
-        MapClassObject.setPosition(gradCoords)
-        MapClassObject.update()
+        MapClassObject.addMarker(Marker(gradCoords, MarkerType.flag))
         print("GradRel:", gradCoords.toString())
