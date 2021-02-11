@@ -2,7 +2,7 @@ import pygame
 
 
 class pySwitch:
-    def __init__(self, x, y, screen, variants, arr,orientation=False):
+    def __init__(self, x, y, screen, variants, arr, orientation=False):
         self.x = x
         self.y = y
         self.handler = None

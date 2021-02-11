@@ -23,7 +23,7 @@ left = pyButton(253, 174, '←', screen, widgets, buttons, 50, 455, toggle=False
 plus_size = pyButton(1000, 174, '+', screen, widgets, buttons, 50, 50, toggle=False)
 minus_size = pyButton(1000, 224, '-', screen, widgets, buttons, 50, 50, toggle=False)
 map = pyMap(300, 175, screen, widgets)
-
+scheme = pySwitch(1000, 300, screen, ('Карта', 'Спутник', 'Гибрид'), widgets)
 
 up.setCheckKey(pygame.K_UP)
 down.setCheckKey(pygame.K_DOWN)
