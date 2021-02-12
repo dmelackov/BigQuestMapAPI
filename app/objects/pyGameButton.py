@@ -78,6 +78,7 @@ class pyButton:
                     + self.height:
                 self.mode = (self.mode + 1) % 2
                 self.timer = 0
+                self.pressed = self.mode
                 if self.handler:
                     self.handler(self.pressed)
             return
