@@ -7,8 +7,6 @@ from app.objects.map import MapClassObject, Layer, Marker, MarkerType
 from app.objects.vectorUtils import Vector
 
 MapClassObject.setPosition(Vector(0, 0))
-MapClassObject.addMarker(Marker(Vector(0, 1), MarkerType.blueRound))
-MapClassObject.addMarker(Marker(Vector(0, 0), MarkerType.blueRound))
 MapClassObject.update()
 pygame.init()
 screen = pygame.display.set_mode((1200, 800))
