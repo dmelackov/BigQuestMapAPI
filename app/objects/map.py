@@ -65,7 +65,6 @@ class Map:
 
     def addMarker(self, marker: Marker):
         self.markers.append(marker)
-        #self.update()
 
     def setLayer(self, layer):
         self.layer = layer

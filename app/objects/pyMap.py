@@ -1,5 +1,4 @@
-import pygame
-from app.objects.map import MapClassObject, Marker, MarkerType
+from app.objects.map import MapClassObject
 from app.objects.vectorUtils import Vector
 import math
 
@@ -12,7 +11,7 @@ class pyMap:
         self.screen = screen
         self.width = 600
         self.height = 450
-        self.callback = lambda: None
+        self.callback = lambda a, b: None
 
     def draw(self):
         self.screen.blit(MapClassObject.image, (self.x, self.y))

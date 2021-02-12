@@ -2,6 +2,7 @@ import requests
 from PIL import Image
 import pygame
 from io import BytesIO
+from app.objects.vectorUtils import Vector
 
 
 class API:
@@ -24,11 +25,15 @@ class API:
         params['l'] = YandexMap.layer
         return self.requestStaticMap(params)
 
+    def findAddressGeocoder(self, address):
+        params = {'geocode': address}
+        return GeocoderMapObject(self.requestGeocoder(params))
+
     def requestGeocoder(self, params: dict):
         localParams = params
         localParams['apikey'] = self.geoCoderApikey
         localParams['format'] = self.format
-        response = self.defaultResponse(self.staticMapUrl, localParams)
+        response = self.defaultResponse(self.geoCoderUrl, localParams)
         return response.json()
 
     def requestOrganization(self, params: dict):
@@ -51,7 +56,6 @@ class API:
 
     def defaultResponse(self, apiServer, params: dict):
         response = requests.get(apiServer, params=params)
-        #print(params)
         if not response:
             print(response.content)
             return
@@ -63,16 +67,20 @@ class GeocoderMapObject:
         self.response = response
 
     def getPostion(self):
-        pass
+        toponym = self.response["response"]["GeoObjectCollection"][
+            "featureMember"][0]["GeoObject"]
+        toponym_coodrinates = toponym["Point"]["pos"]
+        toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
+        return Vector(float(toponym_longitude), float(toponym_lattitude))
 
     def getSize(self):
         pass
 
     def getAddress(self):
-        pass
+        return "lolz"
 
     def getIndex(self):
-        pass
+        return "123"
 
 
 ApiClassObject = API()
