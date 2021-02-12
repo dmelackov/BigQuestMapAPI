@@ -17,13 +17,13 @@ class API:
         self.format = "json"
 
     def loadMap(self, YandexMap):
-        params = {}
+        localparams = {}
         if len(YandexMap.markers) != 0:
-            params['pt'] = '~'.join(list(map(lambda x: x.toString(), YandexMap.markers)))
-        params['ll'] = YandexMap.position.toString()
-        params['z'] = YandexMap.size
-        params['l'] = YandexMap.layer
-        return self.requestStaticMap(params)
+            localparams['pt'] = '~'.join(list(map(lambda x: x.toString(), YandexMap.markers)))
+        localparams['ll'] = YandexMap.position.toString()
+        localparams['z'] = YandexMap.size
+        localparams['l'] = YandexMap.layer
+        return self.requestStaticMap(localparams)
 
     def findAddressGeocoder(self, address):
         params = {'geocode': address}
@@ -74,13 +74,27 @@ class GeocoderMapObject:
         return Vector(float(toponym_longitude), float(toponym_lattitude))
 
     def getSize(self):
-        pass
+        toponym = self.response["response"]["GeoObjectCollection"][
+            "featureMember"][0]["GeoObject"]
+        xstart, ystart = map(float, toponym["boundedBy"]["Envelope"]["upperCorner"].split())
+        xstop, ystop = map(float, toponym["boundedBy"]["Envelope"]["lowerCorner"].split())
+        longitude_size, lattitude_size = [xstart - xstop, ystart - ystop]
+        z = 0
+        while longitude_size < 360 / 2 ** z and z <= 17:
+            z += 1
+        while lattitude_size < 360 / 2 ** z and z <= 17:
+            z += 1
+        return z - 1
 
     def getAddress(self):
-        return "lolz"
+        toponym = self.response["response"]["GeoObjectCollection"][
+            "featureMember"][0]["GeoObject"]
+        return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["formatted"]
 
     def getIndex(self):
-        return "123"
+        toponym = self.response["response"]["GeoObjectCollection"][
+            "featureMember"][0]["GeoObject"]
+        return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
 
 
 ApiClassObject = API()

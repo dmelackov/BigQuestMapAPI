@@ -28,7 +28,7 @@ search_input = inputWindow(10, 40, 350, 25, screen, widgets, inputs, 'Введи
 search_button = pyButton(10, 80, 'Искать', screen, widgets, buttons, 100, 50, toggle=False)
 dropButton = pyButton(10, 140, 'Сброс координат', screen, widgets, buttons, 200, 50, toggle=False)
 
-address_output = inputWindow(299, 700, 600, 25, screen, widgets, inputs, 'Здесь будет адрес', False)
+address_output = inputWindow(299, 700, 800, 25, screen, widgets, inputs, 'Здесь будет адрес', False)
 index_switch = pyButton(10, 700, 'Отображение индекса', screen, widgets, buttons, 260, 30, toggle=True)
 
 up.setCheckKey(pygame.K_UP)
@@ -43,6 +43,7 @@ def resetMarkers():
     MapClassObject.markers = []
     MapClassObject.update()
     address_output.setText("")
+    search_input.setText("")
 
 
 dropButton.setEventHandler(resetMarkers)
@@ -60,7 +61,8 @@ def search():
     MapObject = ApiClassObject.findAddressGeocoder(search_input.getText())
     MapClassObject.setAddress(MapObject)
     MapClassObject.setPosition(MapObject.getPostion())
-    MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.blueRound))
+    MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.blueComma))
+    MapClassObject.setSize(MapObject.getSize())
     MapClassObject.update()
     address_output.setText(
         MapClassObject.focusedAddress.getAddress() + (
@@ -69,7 +71,6 @@ def search():
 
 def indexSwitch(switch):
     if MapClassObject.focusedAddress is not None:
-        print(index_switch.pressed)
         address_output.setText(
             MapClassObject.focusedAddress.getAddress() + (
                 (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if index_switch.pressed else ""))

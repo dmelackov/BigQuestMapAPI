@@ -40,7 +40,7 @@ class Map:
         self.update()
 
     def update(self):
-        self.image = ApiClassObject.loadMap(YandexMap=self)
+        self.image = ApiClassObject.loadMap(self)
 
     def addPosition(self, add: Vector):
         if self.validateCoord(self.position + add):
