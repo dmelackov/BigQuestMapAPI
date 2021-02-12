@@ -3,11 +3,12 @@ from app.objects.pyGameButton import pyButton
 from app.objects.pySwitch import pySwitch
 from app.objects.inputWindow import inputWindow
 from app.objects.pyMap import pyMap
-from app.objects.map import MapClassObject, Layer
+from app.objects.map import MapClassObject, Layer, Marker, MarkerType
 from app.objects.vectorUtils import Vector
 
-MapClassObject.setSize(Vector(20, 20))
-MapClassObject.setPosition(Vector(55.755151, 37.612891))
+MapClassObject.setPosition(Vector(0, 0))
+MapClassObject.addMarker(Marker(Vector(0, 1), MarkerType.blueRound))
+MapClassObject.addMarker(Marker(Vector(0, 0), MarkerType.blueRound))
 MapClassObject.update()
 pygame.init()
 screen = pygame.display.set_mode((1200, 800))
@@ -38,15 +39,30 @@ right.setCheckKey(pygame.K_RIGHT)
 plus_size.setCheckKey(pygame.K_PAGEUP)
 minus_size.setCheckKey(pygame.K_PAGEDOWN)
 
+
+def resetMarkers():
+    MapClassObject.markers = []
+    MapClassObject.update()
+
+
+dropButton.setEventHandler(resetMarkers)
+
 scheme.setEventHandler(lambda x: MapClassObject.setLayer((Layer.map, Layer.sat, Layer.hyb)[x]))
 
-up.setEventHandler(lambda: MapClassObject.addPosition(Vector(0, 1)))
-down.setEventHandler(lambda: MapClassObject.addPosition(Vector(0, -1)))
-left.setEventHandler(lambda: MapClassObject.addPosition(Vector(-1, 0)))
-right.setEventHandler(lambda: MapClassObject.addPosition(Vector(1, 0)))
 
-plus_size.setEventHandler(lambda: MapClassObject.addSize(Vector(-4 / 4, -3 / 4)))
-minus_size.setEventHandler(lambda: MapClassObject.addSize(Vector(4 / 4, 3 / 4)))
+def unitPositionSet(vect):
+    positionDeltaX = 360 / (2 ** MapClassObject.size)
+    positionDeltaY = 180 / (2 ** MapClassObject.size)
+    return Vector(vect.x * positionDeltaX, vect.y * positionDeltaY)
+
+
+up.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(0, 1))))
+down.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(0, -1))))
+left.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(-1, 0))))
+right.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(1, 0))))
+
+plus_size.setEventHandler(lambda: MapClassObject.addSize(1))
+minus_size.setEventHandler(lambda: MapClassObject.addSize(-1))
 
 pygame.display.flip()
 clock = pygame.time.Clock()

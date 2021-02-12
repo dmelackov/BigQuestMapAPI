@@ -20,9 +20,8 @@ class API:
         if len(YandexMap.markers) != 0:
             params['pt'] = '~'.join(list(map(lambda x: x.toString(), YandexMap.markers)))
         params['ll'] = YandexMap.position.toString()
-        params['spn'] = YandexMap.size.toString()
+        params['z'] = YandexMap.size
         params['l'] = YandexMap.layer
-
         return self.requestStaticMap(params)
 
     def requestGeocoder(self, params: dict):
@@ -52,9 +51,9 @@ class API:
 
     def defaultResponse(self, apiServer, params: dict):
         response = requests.get(apiServer, params=params)
+        #print(params)
         if not response:
             print(response.content)
-            print(params)
             return
         return response
 

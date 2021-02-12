@@ -16,4 +16,4 @@ class Vector:
         return Vector(self.x / other, self.y / other)
 
     def toString(self):
-        return f'{self.x},{self.y}'
+        return f'{round(self.x, 10)},{round(self.y, 10)}'

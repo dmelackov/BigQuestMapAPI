@@ -32,7 +32,7 @@ class Marker:
 class Map:
     def __init__(self):
         self.position = Vector(0, 0)
-        self.size = Vector(4, 3)
+        self.size = 1
         self.layer = "map"
         self.focusedAddress = None
         self.image = None
@@ -51,21 +51,21 @@ class Map:
         if self.validateCoord(v):
             self.position = v
 
-    def addSize(self, v: Vector):
-        if (self.size + v).x > 0 and (self.size + v).y > 0:
-            self.size = self.size + v
+    def addSize(self, addSize: int):
+        if 0 <= (self.size + addSize) <= 17:
+            self.size = self.size + addSize
             self.update()
 
-    def setSize(self, v: Vector):
-        if self.validateCoord(v):
-            self.size = v
+    def setSize(self, size: int):
+        if 0 <= size <= 17:
+            self.size = size
 
     def validateCoord(self, val: Vector):
         return abs(val.y) <= 85 and abs(val.x) < 180
 
     def addMarker(self, marker: Marker):
         self.markers.append(marker)
-        self.update()
+        #self.update()
 
     def setLayer(self, layer):
         self.layer = layer

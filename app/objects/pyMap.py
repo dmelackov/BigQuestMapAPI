@@ -1,6 +1,7 @@
 import pygame
 from app.objects.map import MapClassObject, Marker, MarkerType
 from app.objects.vectorUtils import Vector
+import math
 
 
 class pyMap:
@@ -23,13 +24,62 @@ class pyMap:
             return
         if relY >= self.height or relY < 0:
             return
-        print("MapRel:", relX, relY)
         relCoords = Vector(relX - self.width // 2, -(relY - self.height // 2))
-        print("VectorRel:", relCoords.toString())
-        gradCoords = relCoords
-        gradCoords.x /= self.width
-        gradCoords.y /= self.height
-        gradCoords = MapClassObject.position + Vector((gradCoords.x * MapClassObject.size.x),
-                                                      (gradCoords.y * MapClassObject.size.y))
-        MapClassObject.addMarker(Marker(gradCoords, MarkerType.flag))
-        print("GradRel:", gradCoords.toString())
+        global Ycoef
+
+        pixelAbs = Vector(merc_x(MapClassObject.position.x, MapClassObject.size),
+                          merc_y(MapClassObject.position.y, MapClassObject.size))
+
+        pixelAbs += relCoords
+
+        lat, long = intoLatAndLong(pixelAbs.x, pixelAbs.y, MapClassObject.size)
+        gradAbs = Vector(long, lat)
+        MapClassObject.addMarker(Marker(gradAbs, MarkerType.flag))
+        MapClassObject.update()
+
+
+# Кто тронет хоть одну константу - тот пидорас
+Xcoef = 0.711827042
+Ycoef = 0.711827042
+
+
+def merc_x(lon, z):
+    r_major = 6378137.000
+    return r_major * math.radians(lon) * (Xcoef / 111319.49079327357 * 2 ** z)
+
+
+def merc_y(lat, z):
+    if lat > 89.5: lat = 89.5
+    if lat < -89.5: lat = -89.5
+    r_major = 6378137.000
+    r_minor = 6378137.000
+    temp = r_minor / r_major
+    eccent = math.sqrt(1 - temp ** 2)
+    phi = math.radians(lat)
+    sinphi = math.sin(phi)
+    con = eccent * sinphi
+    com = eccent / 2
+    con = ((1.0 - con) / (1.0 + con)) ** com
+    ts = math.tan((math.pi / 2 - phi) / 2) / con
+    y = 0 - r_major * math.log(ts)
+    return y * (Ycoef / 111319.49079327357 * 2 ** z)
+
+
+def intoLatAndLong(Xin, Yin, z):
+    Y = Yin / (Ycoef / 111319.49079327357 * 2 ** z)
+    X = Xin / (Xcoef / 111319.49079327357 * 2 ** z)
+    a = 6378137
+    b = 6378137
+    f = (a - b) / a
+    e = math.sqrt(2 * f - f ** 2)
+    pih = math.pi / 2
+    ts = math.exp(-Y / a)
+    phi = pih - 2 * math.atan(ts)
+    con = e * math.sin(phi)
+    dphi = pih - 2 * math.atan(ts * ((1 - con) / (1 + con)) ** e) - phi
+    phi = phi + dphi
+    rLong = X / a
+    rLat = phi
+    Long = rLong * 180 / math.pi
+    Lat = rLat * 180 / math.pi
+    return Lat, Long
