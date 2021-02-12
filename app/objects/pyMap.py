@@ -12,7 +12,7 @@ class pyMap:
         self.screen = screen
         self.width = 600
         self.height = 450
-        self.func = lambda: None
+        self.callback = lambda: None
 
     def draw(self):
         self.screen.blit(MapClassObject.image, (self.x, self.y))
@@ -34,7 +34,7 @@ class pyMap:
 
         lat, long = intoLatAndLong(pixelAbs.x, pixelAbs.y, MapClassObject.size)
         gradAbs = Vector(long, lat)
-        self.func(gradAbs)
+        self.callback(gradAbs, event)
 
     def setEventHandler(self, func):
         self.callback = func
