@@ -5,6 +5,7 @@ from app.objects.inputWindow import inputWindow
 from app.objects.pyMap import pyMap
 from app.objects.map import MapClassObject, Layer, Marker, MarkerType
 from app.objects.vectorUtils import Vector
+from app.objects.api import ApiClassObject
 
 MapClassObject.setPosition(Vector(0, 0))
 MapClassObject.update()
@@ -41,6 +42,7 @@ minus_size.setCheckKey(pygame.K_PAGEDOWN)
 def resetMarkers():
     MapClassObject.markers = []
     MapClassObject.update()
+    address_output.setText("")
 
 
 dropButton.setEventHandler(resetMarkers)
@@ -54,6 +56,25 @@ def unitPositionSet(vect):
     return Vector(vect.x * positionDeltaX, vect.y * positionDeltaY)
 
 
+def search():
+    MapObject = ApiClassObject.findAddressGeocoder(search_input.getText())
+    MapClassObject.setAddress(MapObject)
+    MapClassObject.setPosition(MapObject.getPostion())
+    MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.blueRound))
+    MapClassObject.update()
+    address_output.setText(
+        MapClassObject.focusedAddress.getAddress() + (
+            (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if index_switch.pressed else ""))
+
+
+def indexSwitch(switch):
+    if MapClassObject.focusedAddress is not None:
+        print(index_switch.pressed)
+        address_output.setText(
+            MapClassObject.focusedAddress.getAddress() + (
+                (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if index_switch.pressed else ""))
+
+
 up.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(0, 1))))
 down.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(0, -1))))
 left.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(-1, 0))))
@@ -61,6 +82,9 @@ right.setEventHandler(lambda: MapClassObject.addPosition(unitPositionSet(Vector(
 
 plus_size.setEventHandler(lambda: MapClassObject.addSize(1))
 minus_size.setEventHandler(lambda: MapClassObject.addSize(-1))
+
+index_switch.setEventHandler(indexSwitch)
+search_button.setEventHandler(search)
 
 pygame.display.flip()
 clock = pygame.time.Clock()
