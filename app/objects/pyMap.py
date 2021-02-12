@@ -12,6 +12,7 @@ class pyMap:
         self.screen = screen
         self.width = 600
         self.height = 450
+        self.func = lambda: None
 
     def draw(self):
         self.screen.blit(MapClassObject.image, (self.x, self.y))
@@ -25,7 +26,6 @@ class pyMap:
         if relY >= self.height or relY < 0:
             return
         relCoords = Vector(relX - self.width // 2, -(relY - self.height // 2))
-        global Ycoef
 
         pixelAbs = Vector(merc_x(MapClassObject.position.x, MapClassObject.size),
                           merc_y(MapClassObject.position.y, MapClassObject.size))
@@ -34,8 +34,10 @@ class pyMap:
 
         lat, long = intoLatAndLong(pixelAbs.x, pixelAbs.y, MapClassObject.size)
         gradAbs = Vector(long, lat)
-        MapClassObject.addMarker(Marker(gradAbs, MarkerType.flag))
-        MapClassObject.update()
+        self.func(gradAbs)
+
+    def setEventHandler(self, func):
+        self.callback = func
 
 
 # Кто тронет хоть одну константу - тот пидорас
