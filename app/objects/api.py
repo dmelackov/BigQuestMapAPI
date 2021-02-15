@@ -94,7 +94,10 @@ class GeocoderMapObject:
     def getIndex(self):
         toponym = self.response["response"]["GeoObjectCollection"][
             "featureMember"][0]["GeoObject"]
-        return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+        try:
+            return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+        except KeyError:
+            return 'Отсутствует'
 
 
 ApiClassObject = API()

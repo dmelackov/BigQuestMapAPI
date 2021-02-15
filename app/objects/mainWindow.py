@@ -115,7 +115,7 @@ class MainWindow:
         MapClassObject.markers = []
         MapClassObject.update()
         self.address_output.setText("")
-        self.earch_input.setText("")
+        self.search_input.setText("")
 
 
 MainWindowClassObject = MainWindow()
