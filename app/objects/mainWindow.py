@@ -40,7 +40,7 @@ class MainWindow:
 
         self.scheme = pySwitch(1000, 300, self.screen, ('Карта', 'Спутник', 'Гибрид'), self.widgets)
 
-        self.search_input = inputWindow(10, 40, 350, 25, self.screen, self.widgets, self.inputs,'', True)
+        self.search_input = inputWindow(10, 40, 350, 25, self.screen, self.widgets, self.inputs, '', True)
         self.search_button = pyButton(10, 80, 'Искать', self.screen, self.widgets, self.buttons, 100, 50, toggle=False)
         self.dropButton = pyButton(10, 140, 'Сброс координат', self.screen, self.widgets, self.buttons, 200, 50,
                                    toggle=False)
@@ -74,6 +74,8 @@ class MainWindow:
         self.index_switch.setEventHandler(self.indexSwitch)
         self.search_button.setEventHandler(self.search)
 
+        self.map.setEventHandler(self.mouseClickSearch)
+
     def tick(self):
         self.screen.fill((0, 0, 0))
         for event in pygame.event.get():
@@ -96,6 +98,7 @@ class MainWindow:
     def search(self):
         if self.search_input.getText().strip() == '':
             return
+        self.resetMarkers()
         MapObject = ApiClassObject.findAddressGeocoder(self.search_input.getText())
         MapClassObject.setAddress(MapObject)
         MapClassObject.setPosition(MapObject.getPostion())
@@ -119,8 +122,15 @@ class MainWindow:
         self.search_input.setText("")
 
     def mouseClickSearch(self, coords, event):
-        if event.button == 3:
-            MapObject = ApiClassObject.findAddressGeocoder()
+        if event.button == pygame.BUTTON_LEFT:
+            self.resetMarkers()
+            MapObject = ApiClassObject.findAddressGeocoder(coords.toString())
+            MapClassObject.setAddress(MapObject)
+            MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.blueComma))
+            MapClassObject.update()
+            self.address_output.setText(
+                MapClassObject.focusedAddress.getAddress() + (
+                    (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if self.index_switch.pressed else ""))
 
 
 MainWindowClassObject = MainWindow()
