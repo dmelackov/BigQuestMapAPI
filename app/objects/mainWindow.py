@@ -118,5 +118,9 @@ class MainWindow:
         self.address_output.setText("")
         self.search_input.setText("")
 
+    def mouseClickSearch(self, coords, event):
+        if event.button == 3:
+            MapObject = ApiClassObject.findAddressGeocoder()
+
 
 MainWindowClassObject = MainWindow()
