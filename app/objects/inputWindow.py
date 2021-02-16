@@ -9,7 +9,8 @@ class inputWindow:
         inputs.append(self)
         self.width = width
         self.height = height
-        self.text = text
+        self.text = ''
+        self.default_text = 'Введите объект для поиска'
         self.edit = editable
         self.i = 0
         self.active = False
@@ -38,11 +39,8 @@ class inputWindow:
         x, y = event.pos
         if self.x <= x <= self.x + self.width and self.y <= y <= self.y + self.height and self.edit:
             self.active = not self.active
-            if self.text == 'Введите объект для поиска':
-                self.text = ''
         else:
             self.active = False
-            self.text = 'Введите объект для поиска' if not self.text else self.text
 
     def keyboardButtonPressed(self, event):
         button = event.unicode
@@ -68,8 +66,12 @@ class inputWindow:
             pygame.draw.rect(self.screen, (255, 255, 255),
                              (self.x - 3, self.y, self.width + 6,
                               self.height), width=1)
-            for sym in self.text[-self.width // self.one_sym - 4:]:
-                x += self.render(sym, (x, y), (255, 255, 255))
+            if self.text:
+                for sym in self.text[-self.width // self.one_sym - 4:]:
+                    x += self.render(sym, (x, y), (255, 255, 255))
+            else:
+                for sym in self.default_text[-self.width // self.one_sym - 4:]:
+                    x += self.render(sym, (x, y), (255, 255, 255))
 
     def render(self, sym, coords, color=(0, 0, 0)):
         string = self.font.render(sym, True, pygame.Color(color))

@@ -40,8 +40,7 @@ class MainWindow:
 
         self.scheme = pySwitch(1000, 300, self.screen, ('Карта', 'Спутник', 'Гибрид'), self.widgets)
 
-        self.search_input = inputWindow(10, 40, 350, 25, self.screen, self.widgets, self.inputs,
-                                        'Введите объект для поиска', True)
+        self.search_input = inputWindow(10, 40, 350, 25, self.screen, self.widgets, self.inputs,'', True)
         self.search_button = pyButton(10, 80, 'Искать', self.screen, self.widgets, self.buttons, 100, 50, toggle=False)
         self.dropButton = pyButton(10, 140, 'Сброс координат', self.screen, self.widgets, self.buttons, 200, 50,
                                    toggle=False)
@@ -95,6 +94,8 @@ class MainWindow:
         self.clock.tick(60)
 
     def search(self):
+        if self.search_input.getText().strip() == '':
+            return
         MapObject = ApiClassObject.findAddressGeocoder(self.search_input.getText())
         MapClassObject.setAddress(MapObject)
         MapClassObject.setPosition(MapObject.getPostion())
