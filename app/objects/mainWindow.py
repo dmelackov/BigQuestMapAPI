@@ -48,7 +48,7 @@ class MainWindow:
         self.address_output = inputWindow(299, 700, 800, 25, self.screen, self.widgets, self.inputs,
                                           'Здесь будет адрес', False)
         self.organisation_output = inputWindow(299, 735, 800, 25, self.screen, self.widgets, self.inputs,
-                                          'Здесь будет название организации', False)
+                                               'Здесь будет название организации', False)
         self.index_switch = pyButton(10, 700, 'Отображение индекса', self.screen, self.widgets, self.buttons, 260, 30,
                                      toggle=True)
 
@@ -122,6 +122,7 @@ class MainWindow:
         MapClassObject.update()
         self.address_output.setText("")
         self.search_input.setText("")
+        self.organisation_output.setText("")
 
     def mouseClickSearch(self, coords, event):
         if event.button == pygame.BUTTON_LEFT:
@@ -142,6 +143,7 @@ class MainWindow:
             self.address_output.setText(
                 MapClassObject.focusedAddress.getAddress() + (
                     (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if self.index_switch.pressed else ""))
+            self.organisation_output.setText(MapClassObject.focusedAddress.getName())
             MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.flag))
             MapClassObject.update()
 
