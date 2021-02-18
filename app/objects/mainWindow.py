@@ -47,6 +47,8 @@ class MainWindow:
 
         self.address_output = inputWindow(299, 700, 800, 25, self.screen, self.widgets, self.inputs,
                                           'Здесь будет адрес', False)
+        self.organisation_output = inputWindow(299, 735, 800, 25, self.screen, self.widgets, self.inputs,
+                                          'Здесь будет название организации', False)
         self.index_switch = pyButton(10, 700, 'Отображение индекса', self.screen, self.widgets, self.buttons, 260, 30,
                                      toggle=True)
 
