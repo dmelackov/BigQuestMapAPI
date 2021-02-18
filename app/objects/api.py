@@ -36,10 +36,15 @@ class API:
         response = self.defaultResponse(self.geoCoderUrl, localParams)
         return response.json()
 
-    def requestOrganization(self, address):
-        localParams = {'text': address, 'apikey': self.organizationApikey, "lang": "ru_RU"}
+    def requestOrganization(self, address, params={}):
+        localParams = params
+        localParams["text"] = address
+        localParams["apikey"] = self.organizationApikey
+        localParams["lang"] = "ru_RU"
+        localParams["type"] = "biz"
+        localParams["spn"] = "1,1"
         response = self.defaultResponse(self.organizationUrl, localParams)
-        return response.json()
+        return OrganisationObject(response.json())
 
     def requestStaticMap(self, params: dict):
         localParams = params
@@ -101,25 +106,34 @@ class GeocoderMapObject:
 class OrganisationObject:
     def __init__(self, response):
         self.response = response
+        if len(self.response["features"]) == 0:
+            return None
+        self.geocode = ApiClassObject.findAddressGeocoder(self.getAddress())
 
     def getAddress(self):
-        toponym = self.response["response"]["GeoObjectCollection"][
-            "featureMember"][0]["GeoObject"]
-        return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["formatted"]
+        if len(self.response["features"]) == 0:
+            return None
+        toponym = self.response["features"][0]["properties"]["CompanyMetaData"]
+        return toponym["address"]
 
     def getIndex(self):
-        toponym = self.response["response"]["GeoObjectCollection"][
-            "featureMember"][0]["GeoObject"]
-        try:
-            return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
-        except KeyError:
-            return 'Отсутствует'
+        if len(self.response["features"]) == 0:
+            return None
+        return self.geocode.getIndex()
 
     def getPostion(self):
-        organization = self.response.json()['features'][0]
-        coords = organization['geometry']['coordinates']
-        print('d')
-        toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
+        if len(self.response["features"]) == 0:
+            return None
+        toponym = self.response["features"][0]
+        coords = toponym['geometry']['coordinates']
+        toponym_longitude, toponym_lattitude = coords
         return Vector(float(toponym_longitude), float(toponym_lattitude))
+
+    def getName(self):
+        if len(self.response["features"]) == 0:
+            return None
+        toponym = self.response["features"][0]["properties"]["CompanyMetaData"]
+        return toponym['name']
+
 
 ApiClassObject = API()

@@ -133,10 +133,15 @@ class MainWindow:
                     (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if self.index_switch.pressed else ""))
         if event.button == pygame.BUTTON_RIGHT:
             self.resetMarkers()
-            MapObject = ApiClassObject.findAddressGeocoder(coords.toString())
-            a = ApiClassObject.requestOrganization(MapObject.getAddress())
-            print(a)
-            a.getPostion()
+            MapObject = ApiClassObject.requestOrganization("магазин", params={"ll": coords.toString()})
+            if MapObject.getPostion() is None:
+                return
+            MapClassObject.setAddress(MapObject)
+            self.address_output.setText(
+                MapClassObject.focusedAddress.getAddress() + (
+                    (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if self.index_switch.pressed else ""))
+            MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.flag))
+            MapClassObject.update()
 
 
 MainWindowClassObject = MainWindow()
