@@ -12,7 +12,7 @@ class API:
         self.organizationUrl = "https://search-maps.yandex.ru/v1/"
 
         self.geoCoderApikey = "40d1649f-0493-4b70-98ba-98533de7710b"
-        self.organizationApikey = ""
+        self.organizationApikey = "ebbc19e0-2f51-41bc-bb0a-4b882df65a8e"
 
         self.format = "json"
 
@@ -36,11 +36,9 @@ class API:
         response = self.defaultResponse(self.geoCoderUrl, localParams)
         return response.json()
 
-    def requestOrganization(self, params: dict):
-        localParams = params
-        localParams['apikey'] = self.organizationApikey
-        localParams["lang"] = "ru_RU"
-        response = self.defaultResponse(self.staticMapUrl, localParams)
+    def requestOrganization(self, address):
+        localParams = {'text': address, 'apikey': self.organizationApikey, "lang": "ru_RU"}
+        response = self.defaultResponse(self.organizationUrl, localParams)
         return response.json()
 
     def requestStaticMap(self, params: dict):
@@ -99,5 +97,29 @@ class GeocoderMapObject:
         except KeyError:
             return 'Отсутствует'
 
+
+class OrganisationObject:
+    def __init__(self, response):
+        self.response = response
+
+    def getAddress(self):
+        toponym = self.response["response"]["GeoObjectCollection"][
+            "featureMember"][0]["GeoObject"]
+        return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["formatted"]
+
+    def getIndex(self):
+        toponym = self.response["response"]["GeoObjectCollection"][
+            "featureMember"][0]["GeoObject"]
+        try:
+            return toponym["metaDataProperty"]["GeocoderMetaData"]["Address"]["postal_code"]
+        except KeyError:
+            return 'Отсутствует'
+
+    def getPostion(self):
+        organization = self.response.json()['features'][0]
+        coords = organization['geometry']['coordinates']
+        print('d')
+        toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
+        return Vector(float(toponym_longitude), float(toponym_lattitude))
 
 ApiClassObject = API()

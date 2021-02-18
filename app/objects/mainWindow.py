@@ -98,8 +98,8 @@ class MainWindow:
     def search(self):
         if self.search_input.getText().strip() == '':
             return
-        self.resetMarkers()
         MapObject = ApiClassObject.findAddressGeocoder(self.search_input.getText())
+        self.resetMarkers()
         MapClassObject.setAddress(MapObject)
         MapClassObject.setPosition(MapObject.getPostion())
         MapClassObject.addMarker(Marker(MapObject.getPostion(), MarkerType.blueComma))
@@ -131,6 +131,12 @@ class MainWindow:
             self.address_output.setText(
                 MapClassObject.focusedAddress.getAddress() + (
                     (" Индекс: " + MapClassObject.focusedAddress.getIndex()) if self.index_switch.pressed else ""))
+        if event.button == pygame.BUTTON_RIGHT:
+            self.resetMarkers()
+            MapObject = ApiClassObject.findAddressGeocoder(coords.toString())
+            a = ApiClassObject.requestOrganization(MapObject.getAddress())
+            print(a)
+            a.getPostion()
 
 
 MainWindowClassObject = MainWindow()

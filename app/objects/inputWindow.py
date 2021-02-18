@@ -9,13 +9,12 @@ class inputWindow:
         inputs.append(self)
         self.width = width
         self.height = height
-        self.text = ''
+        self.text = text
         self.default_text = 'Введите объект для поиска'
         self.edit = editable
         self.i = 0
         self.active = False
         self.screen = screen
-        self.fbuttons = [f'f{x}' for x in range(1, 13)]
         a = 1
         font = pygame.font.SysFont('calibri', a)
         string = font.render('Test string', True, pygame.Color(255, 255, 255))
