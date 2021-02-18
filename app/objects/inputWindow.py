@@ -57,7 +57,7 @@ class inputWindow:
             pygame.draw.rect(self.screen, (255, 255, 255),
                              (self.x - 3, self.y, self.width + 6,
                               self.height))
-            for sym in self.text[-self.width // self.one_sym - 4:]:
+            for sym in self.text[-self.width // self.one_sym:]:
                 x += self.render(sym, (x, y))
                 if x > self.width:
                     self.i += 1
@@ -66,7 +66,7 @@ class inputWindow:
                              (self.x - 3, self.y, self.width + 6,
                               self.height), width=1)
             if self.text:
-                for sym in self.text[-self.width // self.one_sym - 4:]:
+                for sym in self.text[-self.width // self.one_sym :]:
                     x += self.render(sym, (x, y), (255, 255, 255))
             else:
                 for sym in self.default_text[-self.width // self.one_sym - 4:]:
